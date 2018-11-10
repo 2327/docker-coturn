@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  coturn:
+    image: coturn:latest
+    build: .
+    restart: always
+    environment:
+#     - TURN_PORT=55555
+      - TURN_PORT_START=65100
+      - TURN_PORT_END=65400
+# if unset TURN_SECRET and TURN_SECRET not not_used then will generate automatically
+      - TURN_SECRET=not_used
+      - TURN_REALM=example.domain
+# mount certificate
+#    volumes:
+#      - ./turn_server_cert.pem:/turn_server_cert.pem:ro
+#      - ./turn_server_pkey.pem:/turn_server_pkey.pem:ro
+    ports:
+      - 34444:34444
+      - 65100-65400:65100-65400
